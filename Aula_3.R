@@ -296,49 +296,6 @@ View(top_status)
 
 ### Tempo por pedido
 
-gcm_resposta_final <- gcm %>%
-  filter(status != "Finalizado",
-         !grepl("[Tt]este", conteudo_resposta)) %>%
-  arrange(data_interacao, id_pedido) %>%
-  mutate(last_status = last(status),
-         first_status = first(status)) %>%
-  group_by(id_pedido) %>%
-  summarise(last_status = max(last_status),
-            first_status = max(first_status)) %>%
-  inner_join(select(gcm, id_pedido, status, data_interacao, conteudo_resposta),
-             by = c("id_pedido", "last_status" = "status"))
-
-
-View(gcm_resposta_final)
-
-gcm_pedido_resp <- gcm_pedido %>%
-  inner_join(gcm_resposta_final, by="id") %>%
-  filter( id > 3 & id != 5 & dc_pedido != "Teste" & dc_pedido != "teste") %>%
-  rename(data_pedido = dt_resposta_atendimento.x,
-         data_resposta_final = dt_resposta_atendimento.y,
-         status_final = status_nome.y) %>%
-  mutate(tempo_decorrido = as.Date(data_resposta_final) - as.Date(data_pedido),
-         tempo_decorrido1 = as.numeric(tempo_decorrido))
-
-
-View(gcm_pedido_resp)
-
-## prazo médio pra um pedido ser respondido total por órgão
-
-tempo_orgao <- gcm_pedido_resp %>%
-  group_by(orgao_nome) %>%
-  summarise(media = mean(tempo_decorrido),
-            mediana = median(tempo_decorrido),
-            maximo = max(tempo_decorrido),
-            minimo = min(tempo_decorrido),
-            first_q = quantile(tempo_decorrido, .25),
-            third_q = quantile(tempo_decorrido, .75),
-            size_sample = n()) %>%
-  arrange(media)
-
-View(tempo_orgao)
-
-
 ### Joins
 ## O dplyr também tem verbos para duas tabelas
 ## os joins, que servem para juntar duas tabelas

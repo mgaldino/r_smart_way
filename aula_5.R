@@ -8,7 +8,7 @@
 ## Gramática dos gráficos
 
 url <- "http://www.stat.ubc.ca/~jenny/notOcto/STAT545A/examples/gapminder/data/gapminderDataFiveYear.txt"
-gdp <- read.table(url, header=T, sep="\t") 
+gdp <- read.table(url, header=T, sep="\t", quote = "\"", comment.char = "") 
 head(gdp)
 summary(gdp)
 
@@ -24,13 +24,14 @@ ggplot(data=gdp, aes(x= pop, y=gdpPercap)) + geom_point()
 ## geom_point() é é a geomtria de pontos
 ## aes passa eixo x e eixo y
 
-## cada "+" adicionar um layer ou camada
+## cada "+" adiciona um layer ou camada
 ## primeiro é pra dizer quais os dados e em quais eixos
 ## segundo é layer com tipo de gráfico
 ## há mais layers
 
 ## usando o pipe
 library(dplyr)
+
 gdp %>%
   ggplot(aes(x= pop, y=gdpPercap)) + geom_point()
 
@@ -47,27 +48,37 @@ p
 p1 <- p + geom_line(aes(x=pop, y=gdpPercap))
 p1 # dois layers de geom, ponto e linha!
 
-# se q1uiser so linha
-p2 <-  ggplot(data=gdp, aes(x= pop, y=gdpPercap)) + geom_line(aes(x=pop, y=gdpPercap))
+# se quiser so linha
+
+p2 <-  gdp %>%
+  ggplot(aes(x= pop, y=gdpPercap)) + geom_line()
 p2
 
 ## transparencia
-p3 <- ggplot(data=gdp, aes(x= pop, y=gdpPercap))
-p3 <- p3 + geom_point(alpha=.5)
+p3 <- gdp %>%
+  ggplot(aes(x= pop, y=gdpPercap))
+
+p3 + geom_point(alpha=.5)
 p3
+p3 + geom_point(alpha= .1)
+p3 + geom_point(alpha = .01)
 
 # cores por pontos
-p4 <- ggplot(data=gdp, aes(x= pop, y=gdpPercap, color=continent))
+p4 <- gdp %>%
+  ggplot(aes(x= pop, y=gdpPercap, color=continent))
 p4 <- p4 + geom_point()
 p4
 
 # shape, mas prefiro cor
-p5 <- ggplot(data=gdp, aes(x= pop, y=gdpPercap, shape=continent))
+p5 <- gdp %>%
+  ggplot( aes(x= pop, y=gdpPercap, shape=continent))
 p5 <- p5 + geom_point()
 p5
 
 ## facet
-p6 <- ggplot(data=gdp, aes(x= pop, y=gdpPercap))
+p6 <- gdp %>%
+  ggplot(aes(x= pop, y=gdpPercap))
+
 p6 <- p6 + geom_point() + facet_grid(continent ~ .)
 p6
 
@@ -90,6 +101,28 @@ p4
 library(scales)
 p4 <- p4 + scale_x_continuous(labels=comma)
 p4
+
+### 
+pex <- gdp %>%
+  ggplot(aes(y=lifeExp, x=gdpPercap )) + geom_point()
+
+pex + facet_grid(year ~ .) 
+
+gdp %>%
+  mutate(bol80 = as.numeric(year > 1980)) %>%
+  ggplot(aes(y=lifeExp, x=gdpPercap )) + geom_point() +
+  facet_grid(bol80 ~ year )
+
+gdp %>%
+  mutate(bol80 = as.numeric(year > 1980)) %>%
+  ggplot(aes(y=lifeExp, x=gdpPercap )) + geom_point() +
+  facet_grid(bol80 ~ . )
+
+gdp %>%
+  mutate(bol80 = as.numeric(year > 1980)) %>%
+  filter(year == 2007, continent == "Africa") %>%
+  ggplot(aes(y=lifeExp, x=gdpPercap)) +
+   geom_text(aes(label = country), alpha = .5) + ylim(0, 80)
 
 ## themes
 

@@ -7,7 +7,7 @@
 ## Visualização
 ## Gramática dos gráficos
 
-url="http://www.stat.ubc.ca/~jenny/notOcto/STAT545A/examples/gapminder/data/gapminderDataFiveYear.txt"
+url <- "http://www.stat.ubc.ca/~jenny/notOcto/STAT545A/examples/gapminder/data/gapminderDataFiveYear.txt"
 gdp <- read.table(url, header=T, sep="\t"  ) 
 head(gdp)
 summary(gdp)

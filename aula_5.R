@@ -8,14 +8,17 @@
 ## Gramática dos gráficos
 
 url <- "http://www.stat.ubc.ca/~jenny/notOcto/STAT545A/examples/gapminder/data/gapminderDataFiveYear.txt"
-gdp <- read.table(url, header=T, sep="\t"  ) 
+gdp <- read.table(url, header=T, sep="\t") 
 head(gdp)
 summary(gdp)
+
 
 ## lógica do ggplot
 ## primeiro ,passar o banco de dados
 ## segundo, passar os componentes estéticos (aesthetics), dado pelo arg aes
 # terceiro, passar a geometira (se é barra, ponto, linha etc)
+
+library(ggplot2)
 
 ggplot(data=gdp, aes(x= pop, y=gdpPercap)) + geom_point()
 ## geom_point() é é a geomtria de pontos
@@ -26,9 +29,16 @@ ggplot(data=gdp, aes(x= pop, y=gdpPercap)) + geom_point()
 ## segundo é layer com tipo de gráfico
 ## há mais layers
 
+## usando o pipe
+library(dplyr)
+gdp %>%
+  ggplot(aes(x= pop, y=gdpPercap)) + geom_point()
+
 ## algo bacana é que dá pra guardar o plot num objeto
 
-p <- ggplot(data=gdp, aes(x= pop, y=gdpPercap))
+p <- gdp %>%
+  ggplot( aes(x= pop, y=gdpPercap))
+
 p # no layers in plot
 p <- p +  geom_point()
 p

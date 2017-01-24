@@ -1,3 +1,7 @@
+####################
+### Web-scraping
+####################
+
 # O que é webscraping? Ou raspagem (tradução em português), crawler, spider 
 
 # Da [Wikipedia](http://en.wikipedia.org/wiki/Web_scraping)
@@ -63,55 +67,10 @@ names(df1)
 names(df)[1] <- "UF"
 names(df)
 
-colnames(df)
-# podemos usar colnames tbm...
-## o que é melhor, colnames ou names?
-library(microbenchmark)
-
-## names é melhor! 1,5x mais rápido.
-## normalmente eu uso o pacote data.table
-## e não preciso usar names ou colnames
-## se der tempo falamos dele depois
-
-# voltando ao webscraping
-
-head(df)
-## mudamos o nome da coluna errada
-## mas o que tem na primeira coluna?
-
-df[,1]
-
-## nada, podemos dropar
-
-df <- df[, -1]
-
-## agora assim, mudando pra uf
-names(df)[1] <- "uf"
-
-head(df)
-
 
 ## vamos retirar o número após os anos, que originalmente era um subescrito?
 ## alguma ideia de como fazer isso?
 
-# vou fazer uma função
-
-retiraIndice <- function (df) {
-  substr(names(df), 5,5) <- ""
-}
-
-## pra não zuar meu banco original, vou faer uma cópia
-df1 <- df
-
-aux <- names(df[,-1])
-aux
-substr(aux, 5,5) <- ""
-aux
-
-aux2 <- paste(substr(aux, 1,4), substr(aux, 6,nchar(aux)), sep="")
-
-names(df)[2:13] <- aux2
-names(df)
 
 ## that's it!!
 
@@ -258,13 +217,6 @@ summary(tabelasTeste2[[1]])
 ## corrigiu parcialmente apenas. Ok.
 
 
+#http://www.tse.jus.br/eleicoes/estatisticas/repositorio-de-dados-eleitorais
 
-
-
-
-
-http://www.tse.jus.br/eleicoes/estatisticas/repositorio-de-dados-eleitorais
-
-
-
-http://www.r-bloggers.com/web-scraping-working-with-apis/
+#http://www.r-bloggers.com/web-scraping-working-with-apis/

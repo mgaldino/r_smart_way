@@ -1,0 +1,149 @@
+---
+title: "aula 2 - reading files"
+author: "Manoel"
+date: "10 de janeiro de 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Importando dados
+
+O comando padrão do R para importar dados é o read.table. Porém, iremos usar o pacote readr para importar dados, o que deve funcionar melhor que o padrão do R
+
+## usando o readr
+
+library(readr)
+
+O readr tem uma função para cada tipo de dado:
+read_table usado para tabelas separadas por espaço
+read_csv separada por vírgula
+read_csv2 separado por ;
+read_tsv separado por tab
+read_delim : função genérica, para especificar o delimitador.
+
+a estrutura geral do read_table (e similares) é:
+
+```{r}
+# banco <- read_table(nome_do_arquivo)
+
+```
+
+O arquivo deve estar na pasta atual do R.
+PAra saber a pasta atual, use
+
+```{r}
+getwd()
+
+# para mudar a pasta atual, use
+# setwd()
+# ex.
+setwd("C:\\Users\\mgaldino\\2016\\Ford\\Achados e Pedidos\\Arquivos")
+
+
+```
+
+df <- read_csv()
+mtcars <- read_csv(readr_example("mtcars.csv"))
+Importando objetos
+
+```{r}
+mtcars <- read_csv(readr_example("mtcars.csv"))
+```
+
+a função imprime como cada coluna foi interpretada.
+Double é um número "real"
+integer é inteiro etc.
+
+
+```{r}
+sum(c(1,2,3))
+sum
+```
+
+E nós podemos criar nossos próprios objetos, dando os nomes que quisermos (exceto se já existe um objeto no R com aquele nome, como por exemplo o objeto "sum").
+
+```{r}
+x <- 3
+y <- 7
+x+y
+```
+
+## Tipos de objetos
+
+O R tem muitos tipos de objetos. Vamos listar aqui apenas os mais básicos.
+
+# Numeric
+
+Objetos do tipo numeric são ... números ("reais").
+
+```{r}
+# Exemplos
+pi
+1/3
+4
+```
+
+# character
+
+Objetos do tipo characher são do tipo texto. Sempre são escritos entre aspas (simples ou duplas, tanto faz)
+
+```{r}
+# Exemplos
+"Manoel Galdino"
+'abc'
+"7"
+```
+
+## Armazenando dados
+
+Para armazenar dados, usualmente teremos 3 tipos de objeto: 1. vetor, 3. data.frame, 3. lista. Não vou falar de lista agora.
+
+# Vetor
+Um vetor é uma sequência de objetos.
+
+```{r}
+# Exemplos
+c(1,2,3)
+1:3
+c("Manoel", "Hugo", "Lia", "Juliana", "Jéssica")
+c(c(1,2,3), c(2,3,1))
+```
+
+# data.frame
+
+Uma matriz são vetores organizados por coluna, cada coluna (vetor) pode ser de um tipo.
+
+```{r}
+# Exemplos
+data.frame(x=1:3, y=c("a", "b", "c"))
+```
+
+O data.frame é uma tabela/planilha, e é onde normalmente armazenamos nossos bancos de dados no R.
+
+## Bibliotecas/pacotes
+
+O R permite que a gente importe comandos que não vêm por padrão no R. Em gerla esses comandos es~toa agrupados sob um pacote. PAra usar esses comandos, primeiro a gente instala o pacote, e depois carrega a biblioteca.
+
+```{r}
+# Exemplos
+#install.packages("readr")
+#library(readr)
+```
+
+## importando dados
+Para importar dados, vamos usar a bilioteca "readr"
+Então, instalem ela se ainda não instalaram (usando o comando install.packages("readr"))
+e depois carreguem a biblioteca: library(readr)
+
+Para importar um banco de dados, vamos precisar especificar o caminho (pasta) onde o arquivo que queremos importar está. Usaremos a função: setwd
+
+setwd("C:\\Users\\mgaldino\\2016\\Ford\\Achados e Pedidos\\Arquivos")
+
+
+
+
+
+
